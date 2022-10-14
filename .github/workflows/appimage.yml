@@ -28,7 +28,7 @@ jobs:
         allowUpdates: True
         prerelease: False
         artifacts: "${{ env.NAME }}*.AppImage*"
-        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         omitNameDuringUpdate: False
         omitBodyDuringUpdate: False
         tag: v${{ env.VERSION }}
