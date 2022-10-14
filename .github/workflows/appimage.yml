@@ -13,7 +13,7 @@ jobs:
       run: sudo apt-get install desktop-file-utils zsync python qt5-default
 
     # Runs a set of commands using the runners shell
-    - name: Download building tools & executing AppImage build
+    - name: Build AppImage
       run: |
         wget -nv -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
         chmod +x linuxdeploy-x86_64.AppImage
@@ -22,14 +22,13 @@ jobs:
         
 
     - name: Release AppImage
-      if: ${{ github.ref == 'refs/heads/trunk' }}
-      uses: ncipollo/release-action@v1
+      uses: ncipollo/release-action@v1.11.1
       with:
-        name: kcc-${{ env.VERSION }} AppImage
+        name: kcc-${{ env.VERSION }}.AppImage
         allowUpdates: True
         prerelease: False
         artifacts: "${{ env.NAME }}*.AppImage*"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
         omitNameDuringUpdate: False
         omitBodyDuringUpdate: False
         tag: v${{ env.VERSION }}
