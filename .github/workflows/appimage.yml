@@ -15,15 +15,31 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Download building tools & executing AppImage build
       run: |
-        wget -nv -c https://github.com/AppImageCommunity/pkg2appimage/releases/download/continuous/pkg2appimage-1807-x86_64.AppImage
-        wget -nv -c https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
-        ./build.sh
-    - name: Create Release
+        mkdir -m 777 -p $ABS_PATH_WORK_DIR
+        cd $ABS_PATH_WORK_DIR
+        wget -nv -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+        chmod +x linuxdeploy-$ARCH.AppImage
+        ./linuxdeploy-$ARCH.AppImage --appimage-extract
+        wget -nv https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
+        chmod +x linuxdeploy-plugin-gtk.sh
+        
+
+    - name: Release AppImage
+      if: ${{ github.ref == 'refs/heads/trunk' }}
       uses: ncipollo/release-action@v1
       with:
+        name: ${{ env.NAME }}-${{ env.VERSION }} AppImage
         allowUpdates: True
-        tag: continuous
-        name: Continuous build
-        prerelease: True
-        artifacts: "out/*"
+        prerelease: False
+        artifacts: "${{ env.ABS_PATH_WORK_DIR }}/${{ env.NAME }}*.AppImage*"
         token: ${{ secrets.GITHUB_TOKEN }}
+        omitNameDuringUpdate: False
+        omitBodyDuringUpdate: False
+        tag: v${{ env.VERSION }}
+        replacesArtifacts: true
+    - name: Upload Artifacts
+      if: ${{ github.ref != 'refs/heads/trunk' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: AppImage
+        path: ${{ env.ABS_PATH_WORK_DIR }}/${{ env.NAME }}*.AppImage*
