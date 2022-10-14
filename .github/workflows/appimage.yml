@@ -16,10 +16,9 @@ jobs:
     - name: Download building tools & executing AppImage build
       run: |
         wget -nv -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-        chmod +x linuxdeploy-$ARCH.AppImage
-        ./linuxdeploy-$ARCH.AppImage --appimage-extract
-        wget -nv https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
-        chmod +x linuxdeploy-plugin-gtk.sh
+        chmod +x linuxdeploy-x86_64.AppImage
+        ./linuxdeploy-x86_64.AppImage --appimage-extract
+        
         
 
     - name: Release AppImage
