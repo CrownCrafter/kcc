@@ -25,10 +25,10 @@ jobs:
       if: ${{ github.ref == 'refs/heads/trunk' }}
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.NAME }}-${{ env.VERSION }} AppImage
+        name: kcc-${{ env.VERSION }} AppImage
         allowUpdates: True
         prerelease: False
-        artifacts: "${{ env.ABS_PATH_WORK_DIR }}/${{ env.NAME }}*.AppImage*"
+        artifacts: "${{ env.NAME }}*.AppImage*"
         token: ${{ secrets.GITHUB_TOKEN }}
         omitNameDuringUpdate: False
         omitBodyDuringUpdate: False
@@ -39,4 +39,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: AppImage
-        path: ${{ env.ABS_PATH_WORK_DIR }}/${{ env.NAME }}*.AppImage*
+        path: ${{ env.NAME }}*.AppImage*
