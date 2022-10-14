@@ -24,18 +24,18 @@ jobs:
     - name: Release AppImage
       uses: ncipollo/release-action@v1.11.1
       with:
-        name: kcc-${{ env.VERSION }}.AppImage
+        name: kcc-x86_64.AppImage
         allowUpdates: True
         prerelease: False
-        artifacts: "${{ env.NAME }}*.AppImage*"
+        artifacts: "kcc.AppImage*"
         token: ${{ secrets.GITHUB_TOKEN }}
         omitNameDuringUpdate: False
         omitBodyDuringUpdate: False
-        tag: v${{ env.VERSION }}
+        
         replacesArtifacts: true
     - name: Upload Artifacts
       if: ${{ github.ref != 'refs/heads/trunk' }}
       uses: actions/upload-artifact@v3
       with:
         name: AppImage
-        path: ${{ env.NAME }}*.AppImage*
+        path: kcc-x86_64.AppImage*
