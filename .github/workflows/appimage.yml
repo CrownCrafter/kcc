@@ -17,7 +17,7 @@ jobs:
       run: |
         wget -nv -c https://github.com/AppImageCommunity/pkg2appimage/releases/download/continuous/pkg2appimage-1807-x86_64.AppImage
         wget -nv -c https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
-
+        ./build.sh
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
